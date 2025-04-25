@@ -86,6 +86,7 @@ Mail: michalburdukiewicz@gmail.com
 3. **Błędy w wizualizacjach danych.**
     - Praca w grupach.
 4. **Narzędzia do wizualizacji danych.**
+    - Praca w grupach.
 5. Efektywne projektowanie dashboardów.
 6. Zaaawansowane wizualizacje danych.
 
@@ -623,20 +624,8 @@ Riseup: https://pad.riseup.net/p/WWD-tmp
 
 1. Programistyczne (R, Python, JavaScript)
 2. Programy graficzne (Inkscape).
-3. Programy dedykowane do wizualizacji danych (Tableau).
+3. Programy przeznaczone do wizualizacji danych i budowy dashboardów (Tableau).
 
-## Języki wizualizacji danych
-
-```{r}
-ggplot(cbind(expand.grid(x = c("Imperatywne\n", "Deklaratywne\n"),
-                         y = c("Proste do użycia", "Wszechstronne")), 
-             software = c("Seaborn", "Bokeh\nR (ggplot2)\nLeaflet\nVega-Lite",  "Matplotlib\nR (base, grid)", "BQPlot\nD3\nPlotly\nVega")),
-       aes(x = x, y = y, label = software)) +
-  geom_tile(fill = NA, color = "black") +
-  geom_text()  +
-  theme_void() +
-  theme(axis.text = element_text(color = "black"))
-```
 
 ## Podział narzędzi do wizualizacji danych
 
@@ -666,9 +655,144 @@ ggplot(cbind(expand.grid(x = c("Imperatywne\n", "Deklaratywne\n"),
   ggtitle("Jakich narzędzi używamy w codziennej praktyce?")
 ```
 
+## Wywołanie deklaratywne
+
+```{r,echo = TRUE, eval = FALSE}
+library(ggplot2)
+
+ggplot(iris, aes(x = Sepal.Length, y = Petal.Length)) +
+  geom_point()
+
+```
+
+## Wywołanie deklaratywne
+
+```{r,echo = FALSE, eval = TRUE}
+library(ggplot2)
+
+ggplot(iris, aes(x = Sepal.Length, y = Petal.Length)) +
+  geom_point()
+
+```
+
+## Wywołanie imperatywne
+
+```{r,echo = TRUE, eval = FALSE}
+library(grid)
+
+grid.newpage()
+
+pushViewport(plotViewport(margins = c(5, 5, 5, 5)))
+pushViewport(dataViewport(xscale = range(iris[["Sepal.Length"]]), 
+                          yscale = range(iris[["Petal.Length"]])))
+
+grid.xaxis()
+grid.yaxis()
+
+grid.points(x = iris[["Sepal.Length"]], 
+            y = iris[["Petal.Length"]],
+            default.units = "native", 
+            pch = 16)
+```
+
+## Wywołanie imperatywne
+
+```{r,echo = FALSE, eval = TRUE}
+library(grid)
+
+grid.newpage()
+
+pushViewport(plotViewport(margins = c(5, 5, 5, 5)))
+pushViewport(dataViewport(xscale = range(iris[["Sepal.Length"]]), 
+                          yscale = range(iris[["Petal.Length"]])))
+
+grid.xaxis()
+grid.yaxis()
+
+grid.points(x = iris[["Sepal.Length"]], 
+            y = iris[["Petal.Length"]],
+            default.units = "native", 
+            pch = 16)
+```
+
 ## Języki wizualizacji danych
 
-Więcej informacji: W1-addendum.html
+```{r}
+ggplot(cbind(expand.grid(x = c("Imperatywne\n", "Deklaratywne\n"),
+                         y = c("Proste do użycia", "Wszechstronne")), 
+             software = c("Seaborn", "Bokeh\nR (ggplot2)\nLeaflet\nVega-Lite",  "Matplotlib\nR (base, grid)", "BQPlot\nD3\nPlotly\nVega")),
+       aes(x = x, y = y, label = software)) +
+  geom_tile(fill = NA, color = "black") +
+  geom_text()  +
+  theme_void() +
+  theme(axis.text = element_text(color = "black"))
+```
+
+Lista narzędzi do wizualizacji danych: W1-addendum.html.
+
+## Domyślne ustawienia narzędzi
+
+Domyślne ustawienia to wbudowane decyzje o wyglądzie wykresu podjęte przez autorów danego narzędzia. Mają za zadanie przyśpieszyć tworzenie zrozumiałych wykresów, ale czasami mogą prowadzić do błędów.
+
+## Domyślne ustawienia narzędzi
+
+Przykład problemu: domyślne ustawienia etykiet na osi X utrudnia ich odczytanie.
+
+```{r}
+ggplot(mpg, aes(x = model)) +
+  geom_bar()
+```
+
+## Domyślne ustawienia narzędzi
+
+Rozwiązanie problemu: zmiana ustawienia etykiet na osi X.
+
+```{r}
+ggplot(mpg, aes(x = model)) +
+  geom_bar() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+## Domyślne ustawienia narzędzi
+
+Dobrze dobrane domyślne ustawienia znacząco przyśpieszają naszą pracę i pozwalają przenieść część decyzji na autorów narzędzia. 
+
+Są one **szczególnie** istotne przy budowaniu dashboardów lub automatycznych raportów, gdzie wizualizacje są budowane na zmieniających się zbiorach danych.
+
+## Koszt wejścia w narzędzie
+
+Koszt wejścia w narzędzie to czas i wysiłek potrzebny do nauczenia się jego używania. Koszt ten jest różny dla różnych narzędzi i zależy od ich złożoności oraz dostępności dokumentacji.
+
+Narzędzia o niskim koszcie wejścia: MS Excel, Datawrapper.
+
+Narzędzia o wysokim koszcie wejścia: ggplot2, Seaborn, matplotlib.
+
+## Jak wybrać narzędzie pod względem kosztu?
+
+Aby prawidłowo wybrać narzędzie o jak najmniejszym koszcie wejścia, potrzebne jest **doświadczenie**, aby oszacować ukryte koszty.
+
+Narzędzia o niskim koszcie wejścia często szybko „blokują” użytkownika, gdy chce on wykroczyć poza podstawowe funkcje. Duża część domyślnych parametrów lub sposobów działania może być głęboko zaszyta w narzędziu co utrudnia ich modyfikację.
+
+## Koszt wejścia w narzędzie
+
+Koszt wejścia w narzędzie to inwestycja.
+
+Krótki czas do uzyskania pierwszego wykresu nie zawsze oznacza uzyskanie oczekiwanych efektów (np. skalowalności, automatyzacji).
+
+## Praca w grupach
+
+1. Każda osoba w grupie samodzielnie zapisuje 2–3 cechy, które według niej są najważniejsze w narzędziu do wizualizacji.
+2. Dyskusja w grupie:
+    1. Które cechy podane przez członków grupy są zbieżne ze sobą, a które są różne od siebie?
+    2. Dlaczego te różnice się pojawiły? Czy wynikają z innych doświadczeń lub z innych potrzeb dotyczących wizualizacji danych?
+3. Pisemne podsumowanie:
+    1. Jedna cecha, która jest istotna dla wszystkich członków grupy.
+    2. Najbardziej zaskakująca różnica oczekiwań i krótko wyjaśnienie, dlaczego ta różnica się pojawiła.
+  
+  
+## Najlepsze narzędzie do wizualizacji
+
+Wybór narzędzia do wizualizacji to nie kwestia technologii, ale umiejętności twórcy, celu komunikacyjnego i kontekstu.
 
 ## Kontakt
 
