@@ -1,0 +1,200 @@
+---
+title: "Wizualizacja danych I"
+author: "Michał Burdukiewicz"
+date: "26-04-2025"
+output: 
+  ioslides_presentation:
+    theme: "simplex"
+---
+
+<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+
+<style>
+slides > slide {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
+
+</style>
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(rgl)
+library(ggplot2)
+library(plotly)
+library(dplyr)
+library(patchwork)
+library(ggthemes)
+opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+knit_hooks$set(webgl = hook_webgl)
+data("midwest", package = "ggplot2")
+options(scipen=999)  # turn-off scientific notation like 1e+48
+theme_set(theme_bw())  # pre-set the bw theme.
+```
+
+# Narzędzia do wizualizacji
+
+## Narzędzia
+
+1. Programistyczne (R, Python, JavaScript)
+2. Programy graficzne (Inkscape).
+3. Programy dedykowane do wizualizacji danych (Tableau).
+
+## Języki wizualizacji danych
+
+```{r}
+ggplot(cbind(expand.grid(x = c("Imperatywne\n", "Deklaratywne\n"),
+                         y = c("Proste do użycia", "Wszechstronne")), 
+             software = c("Seaborn", "Bokeh\nR (ggplot2)\nLeaflet\nVega-Lite",  "Matplotlib\nR (base, grid)", "BQPlot\nD3\nPlotly\nVega")),
+       aes(x = x, y = y, label = software)) +
+  geom_tile(fill = NA, color = "black") +
+  geom_text()  +
+  theme_void() +
+  theme(axis.text = element_text(color = "black"))
+```
+
+## Podział narzędzi do wizualizacji danych
+
+Deklaratywne:
+
+ - zadanie: warunki jakie musi spełniać wizualizacja,
+ - jak wizualizacja jest wykonywana jest rozstrzygane wewnętrznie i niezależnie od użytkownika,
+ - oddzielenie specyfikacji od wykonania.
+
+Imperatywne:
+
+ - zadanie: krok po kroku jak stworzyć wizualizację,
+ - użytkownik w pełni kontroluje każdy detal wizualizacji,
+ - jeśli warunki jakie musi spełniać wizualizacja zmienią się nawet odrobinę, instrukcja tworzenia może się zmienić znacząco.
+
+## Języki wizualizacji danych
+
+```{r}
+ggplot(cbind(expand.grid(x = c("Imperatywne\n", "Deklaratywne\n"),
+                         y = c("Proste do użycia", "Wszechstronne")), 
+             software = c("Seaborn", "Bokeh\nR (ggplot2)\nLeaflet\nVega-Lite",  "Matplotlib\nR (base, grid)", "BQPlot\nD3\nPlotly\nVega")),
+       aes(x = x, y = y, label = software)) +
+  geom_tile(fill = NA, color = "black") +
+  geom_text()  +
+  theme_void() +
+  theme(axis.text = element_text(color = "black")) +
+  ggtitle("Jakich narzędzi używamy w codziennej praktyce?")
+```
+
+## Altair (Python)
+
+https://altair-viz.github.io/gallery/simple_bar_chart.html
+
+https://altair-viz.github.io/gallery/scatter_tooltips.html
+
+https://altair-viz.github.io/gallery/line_with_ci.html
+
+## Altair (Python)
+
+Pythonowe API dla Vega-Lite.
+
+Brian Granger, uzasadniając stworzenie Altaira: *I love Python, but do my visualisations using R/ggplot2*.
+
+## Altair (Python)
+
+- Małe wsparcie dla typowo stastycznych wizualizacji
+
+Pakiet R: https://github.com/vegawidget/altair (używa reticulate).
+
+## bokeh (Python)
+
+https://demo.bokeh.org/movies
+
+## bokeh (Python)
+
+- Python jako API do BokehJS,
+- praca głownie w Pythonie, JSowy silnik mało dostępny i źle udokumentowany,
+- całe dashboardy.
+
+## bokeh (R)
+
+- implementacja w R: https://github.com/bokeh/rbokeh
+- Zarchiwizowany: 01.11.2023
+
+## Leaflet 
+
+[Leaflet.js](https://leafletjs.com/): interaktywne mapy.
+
+## Leaflet
+
+W R: https://rstudio.github.io/leaflet/
+
+W Pythonie: https://github.com/python-visualization/folium
+
+## matplotlib (Python)
+
+https://matplotlib.org/
+
+## matplotlib (Python)
+
+- trudne zarządzanie czasem na osiach,
+- niesatysfakcjonujące mapowanie do kształtów.
+
+Rozszerzenia: https://mpld3.github.io/
+
+## plot.ly
+
+```{r, echo=FALSE,warning=FALSE}
+gg <- ggplot(midwest, aes(x=area, y=poptotal)) + 
+  geom_point(aes(col=state)) + 
+  geom_smooth(method="loess", se=F) + 
+  xlim(c(0, 0.1)) + 
+  ylim(c(0, 500000)) + 
+  scale_color_discrete("") +
+  labs(y="Population", 
+       x="Area") +
+  theme_bw()
+
+plotly::ggplotly(gg)
+```
+
+## seaborn
+
+https://seaborn.pydata.org/ - oparte na matplotlib.
+
+Świetne szablony wizualizacji!
+
+## Vega-Lite
+
+Pakiety w R: https://github.com/hrbrmstr/vegalite i https://github.com/vegawidget/vegawidget
+
+## Vega
+
+JSONowa specyfikacja wizualizacji.
+
+Lyra (nie zniechęcać się http://vega.github.io/lyra/).
+
+Lyra 1.0 jest online i działa satysfakcjonująco: http://idl.cs.washington.edu/projects/lyra/.
+
+## Programy graficzne 
+
+Inkscape: darmowy i otwarty edytor grafiki wektorowej.
+
+ - [Oficjalny tutorial](https://inkscape.org/en/doc/basic/tutorial-basic.pl.html).
+ - [Inkscape w praktyce](https://pl.wikibooks.org/wiki/Inkscape_w_praktyce).
+ 
+## AI w wizualizacji danych
+
+Tableau: 
+
+ - https://www.tableau.com/products/tableau-ai
+
+NL4DV: 
+
+ - https://nl4dv.github.io/nl4dv/
+
+
+

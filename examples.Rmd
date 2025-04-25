@@ -1,0 +1,103 @@
+---
+title: "Przykłady"
+author: "Michał Burdukiewicz"
+date: "16-11-2024"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(dplyr)
+library(ggplot2)
+library(ggthemes)
+theme_set(theme_bw())
+```
+
+```{r}
+dat <- read.csv("./data/polish-driver-license.csv") %>% 
+    rename(gender = sex)
+```
+
+Źródło danych: https://github.com/michbur/polish-driver-license
+
+## Rysunek 1
+
+```{r}
+group_by(dat, age, voivodeship) %>% 
+  summarise(mean = mean(count)) %>% 
+  ggplot(aes(x = age, y = mean, fill = voivodeship)) +
+  geom_col()  
+```
+
+Cel: pokazanie średniej liczby osób, które uzyskały prawo jazdy w danym wieku w zależności od województwa.
+
+
+
+## Rysunek 2
+
+```{r}
+group_by(dat, gender, voivodeship) %>% 
+  summarise(total = sum(count)) %>% 
+  mutate(fraction = total/sum(total)) %>% 
+  ggplot(aes(x = gender, y = fraction, fill = voivodeship)) +
+  geom_col() 
+```
+
+Cel: pokazanie frakcji kobiet i mężczyzn uzyskujących prawo jazdy w danym województwie.
+
+
+## Rysunek 3
+
+```{r}
+group_by(dat, month, year, voivodeship) %>% 
+  summarise(total = sum(count)) %>% 
+  filter(voivodeship == "WOJ. MAZOWIECKIE") %>% 
+  ggplot(aes(x = factor(year), y = total)) +
+  geom_boxplot() +
+  scale_x_discrete("Year") +
+  scale_color_discrete("Month") +
+  geom_point(aes(color = factor(month))) +
+  ggtitle("Mazowieckie")
+```
+
+Cel: pokazanie zmienności liczby uzyskanych praw jazdy w skali roku w zależności od roku w województwie mazowieckim.
+
+
+
+## Rysunek 4
+
+```{r}
+group_by(dat, gender, age) %>% 
+  summarise(total = sum(count)) %>% 
+  ggplot(aes(x = age, y = total, color = gender)) +
+  geom_point()
+
+```
+
+Cel: pokazać zależność liczby uzyskanych praw jazdy w zależności od wieku i płci.
+
+
+## Rysunek 5
+
+```{r,fig.height=7}
+group_by(dat, month, age) %>% 
+  summarise(total = sum(count)) %>% 
+  ggplot(aes(x = month, y = total)) +
+  geom_point() + 
+  facet_wrap(~ age) +
+  theme(axis.text.x = element_text(angle = 90))
+```
+
+Cel: pokazać liczbę praw jazdy uzyskiwanych przez osoby w różnym wieku w zależności od miesiąca.
+
+## Rysunek 6
+
+```{r,fig.height=7}
+group_by(dat, year, gender, voivodeship) %>% 
+  summarise(total = sum(count)) %>% 
+  ggplot(aes(x = year, y = gender, fill = total)) +
+  geom_tile(color = "black") +
+  facet_wrap(~ voivodeship) 
+```
+
+Cel: pokazać liczbę uzyskanych praw jazdy dla poszczególnych województw w zależności od płci i roku.
