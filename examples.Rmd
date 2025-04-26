@@ -1,7 +1,7 @@
 ---
 title: "Przykłady"
 author: "Michał Burdukiewicz"
-date: "16-11-2024"
+date: "26-04-2025"
 output: html_document
 ---
 

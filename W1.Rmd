@@ -69,6 +69,12 @@ Mail: michalburdukiewicz@gmail.com
  - Cairo, A. (2019). How Charts Lie: Getting Smarter about Visual Information.
  - [Engebretsen M., Kennedy H. (2020). Data Visualization in Society](https://www.aup.nl/en/book/9789048543137/data-visualization-in-society).
  
+## Praktyczny R z elementami bioinformatyki
+
+<img src="./img/cover.jpg" width="300px">
+
+W księgarniach pod koniec 2025.
+ 
 ## Plan spotkań
 
 1. Czym są wizualizacje danych?
@@ -485,7 +491,7 @@ W podgrupach opisać wykresy wykorzystując gramatykę grafiki. Skupiamy się na
  
 Riseup: https://pad.riseup.net/p/WWD-tmp
 
-Plik: [examples.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/michbur/WizualizacjaDanych2024-2025Z/main/examples.html).
+Plik: [examples.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/michbur/WizualizacjaDanych2024-2025L/main/examples.html).
 
 # Błędy w wizualizacjach 
 
@@ -614,9 +620,7 @@ W podgrupach zaproponować poprawiony wykres wykorzystując gramatykę grafiki.
  
 Riseup: https://pad.riseup.net/p/WWD-tmp
 
-Plik: [examples.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/michbur/WizualizacjaDanych2024-2025Z/main/examples.html).
-
-Riseup: https://pad.riseup.net/p/WWD-tmp
+Plik: [examples.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/michbur/WizualizacjaDanych2024-2025L/main/examples.html).
 
 # Narzędzia do wizualizacji
 
@@ -778,6 +782,44 @@ Narzędzia o niskim koszcie wejścia często szybko „blokują” użytkownika,
 Koszt wejścia w narzędzie to inwestycja.
 
 Krótki czas do uzyskania pierwszego wykresu nie zawsze oznacza uzyskanie oczekiwanych efektów (np. skalowalności, automatyzacji).
+
+## SI a wizualizacja danych
+
+Wykorzystanie sztucznej inteligencji w wizualizacji danych:
+
+1. Narzędzia oparte o SI do generowania wykresów.
+2. Generowanie kodu za pomocą SI tworzącego wykresy.
+
+
+## Narzędzia oparte o SI
+
+ - Quadratic AI
+ - Julius AI
+ - Data Formulator
+ - Rose.ai
+
+Problemy: bezpieczeństwo danych, jakość generowanych wykresów, brak kontroli nad wizualizacją.
+
+## Generowanie kodu za pomocą SI
+
+Problemy: 
+
+ - nieaktualność kodu (frameworki do wizualizacji danych ewoluują bardzo szybko),
+ - niska jakość powstałych wizualizacji jeśli są bardziej zaawansowane,
+ - arbitralność podjętych decyzji bez zrozumienia celu analizy.
+ 
+## Generowanie kodu za pomocą SI
+
+Problemy: 
+
+ - nieaktualność kodu (frameworki do wizualizacji danych ewoluują bardzo szybko),
+ - niska jakość powstałych wizualizacji jeśli są bardziej zaawansowane,
+ - arbitralność podjętych decyzji bez zrozumienia celu analizy.
+ 
+
+## Generowanie kodu za pomocą SI
+
+<img src="./img/ai.png" width="600px">
 
 ## Praca w grupach
 
