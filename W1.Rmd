@@ -828,10 +828,10 @@ Wybór narzędzia do wizualizacji to nie kwestia technologii, ale umiejętności
 
 ## Kontakt
 
-Materiały: https://github.com/michbur/WizualizacjaDanych2025-2024L
+Materiały: https://github.com/michbur/WizualizacjaDanych2024-2025L
 
 Mail: michalburdukiewicz@gmail.com
 
-Ankieta: 
+Ankieta: https://forms.gle/4EnADEhSCmm6G7fY9
 
 
