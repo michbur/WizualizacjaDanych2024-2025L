@@ -14,8 +14,7 @@ theme_set(theme_bw())
 ```
 
 ```{r}
-dat <- read.csv("./data/polish-driver-license.csv") %>% 
-    rename(gender = sex)
+dat <- read.csv("./data/polish-driver-license.csv") 
 ```
 
 Źródło danych: https://github.com/michbur/polish-driver-license

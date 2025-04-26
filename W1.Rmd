@@ -147,18 +147,8 @@ ggplot(cbind(expand.grid(x = c("Statyczne\n", "Interaktywne\n"),
 ## Wizualizacja statyczna
 
 ```{r, echo=FALSE,warning=FALSE}
-
-# midwest <- read.csv("http://goo.gl/G1K41K")  # bkup data source
-
-# Scatterplot
-gg <- ggplot(midwest, aes(x=area, y=poptotal)) + 
-  geom_point(aes(col=state)) + 
-  geom_smooth(method="loess", se=F) + 
-  xlim(c(0, 0.1)) + 
-  ylim(c(0, 500000)) + 
-  scale_color_discrete("") +
-  labs(y="Population", 
-       x="Area") +
+gg <- ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+  geom_point(size = 4) +
   theme_bw()
 
 gg
@@ -474,7 +464,7 @@ kable(dat[1L:3, ])
 ```
 
  - **voivodeship**: województwo
- - **sex**: płeć
+ - **gender**: płeć
  - **age**: wiek
  - **count**: liczba uzyskanych praw jazdy
  - **year**: rok
