@@ -157,9 +157,19 @@ mutate(dat, age = cut(age, breaks = c(0, 30, 60, max(dat$age)), include.lowest =
   summarise(total = sum(count)) %>% 
   ggplot(aes(x = age, y = total, fill = gender)) +
   geom_col() +
-  ggtitle("Po poprawkach")
+  ggtitle("Po poprawkach") 
 
 ```
+
+Zmiana dodatkowa:
+
+Jeśli chodzi o atrybuty wizualne na początek nie zmieniałbym osi X - niech nadal przestawia wiek.  Kolorem będzie przedstawiona płeć a na osi Y nadal niech będzie przestawiona liczba zdanych egzaminów ALE z racji tego iż jest duży rozstrzał pomiędzy wartościami zmieniłbym skale na logarytmiczną (oczywiście informując o tym wyraźnie czytelnika wykresu). Kropki płci nakładają się na siebie i z tego powodu czytelnik może nie być pewny czy pod spodem kropki jest "coś" jeszcze. 
+Rozwiązaniem wyżej wymienionych problemów może być tzw. area chart, gdzie przezroczystość pozwala na dostrzeżenie warstw (odpowiedzialnych za podział ze względu na płeć) [załącznik propozycja 1.jpg]
+
+```{r}
+knitr::include_graphics("./img/propozycja 1.jpg")
+```
+
 
 ## Rysunek 5
 
@@ -169,10 +179,27 @@ group_by(dat, month, age) %>%
   ggplot(aes(x = month, y = total)) +
   geom_point() + 
   facet_wrap(~ age) +
-  theme(axis.text.x = element_text(angle = 90))
+  theme(axis.text.x = element_text(angle = 90)) +
+  ggtitle("Przed poprawkami")
 ```
 
 Cel: pokazać liczbę praw jazdy uzyskiwanych przez osoby w różnym wieku w zależności od miesiąca.
+
+Zmiany: 
+
+Fasety miesięczne, na osi X wiek (wartości całkowite), na osi Y ilość praw jazdy (wartości całkowite), skok o 5k . Wykres słupkowy. Na osi X tworzymy kubełki zawierające wyniki dla konkretnych przedziałów wieku 14-17, 18-19, 20-30, 31-90. 
+
+```{r,fig.height=7}
+mutate(dat, age = cut(age, breaks = c(14, 17, 19, 20, 30, max(dat$age)), include.lowest = TRUE)) %>% 
+  group_by(month, age) %>% 
+  summarise(total = sum(count)) %>% 
+  ggplot(aes(x = age, y = total)) +
+  geom_col() + 
+  facet_wrap(~ month) +
+  theme(axis.text.x = element_text(angle = 90)) +
+  ggtitle("Po poprawkach")
+```
+
 
 ## Rysunek 6
 
@@ -181,7 +208,21 @@ group_by(dat, year, gender, voivodeship) %>%
   summarise(total = sum(count)) %>% 
   ggplot(aes(x = year, y = gender, fill = total)) +
   geom_tile(color = "black") +
-  facet_wrap(~ voivodeship) 
+  facet_wrap(~ voivodeship) +
+  ggtitle("Przed poprawkami")
 ```
 
 Cel: pokazać liczbę uzyskanych praw jazdy dla poszczególnych województw w zależności od płci i roku.
+
+Zmiany:
+
+pomysł 1. użycie mapy Polski, dla każdego województwa 4x2 kolumny po latach i podzielone na kobiety/mężczyzn (różne kolory)
+
+```{r,fig.height=7}
+group_by(dat, year, gender, voivodeship) %>% 
+  summarise(total = sum(count)) %>% 
+  ggplot(aes(x = year, y = total, fill = gender)) +
+  geom_col(color = "black", position = "dodge") +
+  facet_wrap(~ voivodeship, ncol = 3) +
+  ggtitle("Po poprawkach")
+```
