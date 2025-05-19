@@ -152,11 +152,12 @@ Fasety:
 
 
 ```{r}
-mutate(dat, age = cut(age, breaks = c(0, 30, 60, max(dat$age)), include.lowest = TRUE)) %>% 
-  group_by(gender, age) %>% 
+ group_by(dat, gender, age) %>% 
   summarise(total = sum(count)) %>% 
+  mutate(age2 = cut(age, breaks = c(0, 30, 60, max(dat$age)), include.lowest = TRUE)) %>%
   ggplot(aes(x = age, y = total, fill = gender)) +
   geom_col() +
+  facet_wrap(~ age2, scales = "free", ncol = 1) +
   ggtitle("Po poprawkach") 
 
 ```

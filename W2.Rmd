@@ -300,6 +300,8 @@ ggplot(as.data.frame(Titanic),
 
 Diagram Sankeya (alluvial plot): przestawienie przepływu obiektów między poszczególnymi stanami.
 
+Przykład: https://www.appeconomyinsights.com/
+
 ## Wykres strunowy
 
 <a href="https://www.data-to-viz.com/graph/chord_files/figure-html/unnamed-chunk-1-1.png"><img src="https://www.data-to-viz.com/graph/chord_files/figure-html/unnamed-chunk-1-1.png" width="400px"></a>
